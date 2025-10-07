@@ -28,3 +28,11 @@ for file_path in data_list:
     print(full_path)
 
 #%% Task 3 - Continuing Lists and Iteration 
+# empty list variable 
+user_numbers = []
+user_input = input("Enter an integer:")
+
+# Creating a for loop with user inputs 
+for numbers in range(20): 
+    user_numbers.append(user_input)
+    print(user_numbers)
