@@ -65,8 +65,35 @@ if len(keys) == 0:
     print(f"No records were found on {vesselID}")
 
 #Loop through keys and report locations
-for key in keys: 
-    location = location_dict[key]
-    lat = location[0]
-    lng = location[1]
-    print(f"On {user_date}, Sara the turtle was seen at {lat} Lat, {lng} Lng.")
+# for key in keys: 
+    # location = location_dict[key]
+    # lat = location[0]
+    # lng = location[1]
+    # print(f"On {user_date}, Sara the turtle was seen at {lat} Lat, {lng} Lng.")
+
+# %% Question 5 - Loitering events - reading in the data 
+
+# Python file object for loitering dataset 
+fileObjLoit = open(file='data/raw/loitering_events_20180723.csv',mode='r')
+
+# Constructing a list of all lines in the csv file 
+lineListLoit = fileObjLoit.readlines()
+
+#Release the link to the file objects 
+fileObjLoit.close() #Close the file
+
+# %% Question 5 - looping through the variables 
+for ships in fileObjLoit[1:]: 
+# Split the string into a list of data items 
+    shipsstring = str(ships)
+    lineData = shipsstring.split(",")
+# Store relevant values into their own variables 
+    transshipment_mmsi = lineData[0]
+    starting_latitude = lineData[1]
+    starting_longitude = lineData[2]
+    ending_latitude = lineData[3]
+    ending_longitude = lineData[4]
+# Examine latitude parameters
+    if starting_latitude < 0 and starting_longitude > 0:
+        continue
+# Examine longtitude parameters 
