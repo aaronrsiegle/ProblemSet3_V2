@@ -1,3 +1,5 @@
+# Aaron Siegle 
+# 10/7/2025
 #%% Task 1 - Edit code to print as requested
 # Defining variables 
 
