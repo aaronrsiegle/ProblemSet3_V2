@@ -36,17 +36,19 @@ print(mmsi_idx,name_idx,fleet_idx)
 vesselDict = {}
 
 #Iterate through all lines (except the header) in the data file:
-for data in #need to enter in the correct thing here- need to reopen the fileObj file:  
+for row in lineList[1:]:
 #Split the data into values
-    data.split(",")
+    parts = row.split(",")
 #Extract the mmsi value from the list using the mmsi_idx value
-    mmsi = headerItems[0]
+    mmsi = parts[mmsi_idx]
 #Extract the fleet value
-    fleet = headerItems[4]
+    fleet = parts[fleet_idx]
 #Adds info to the vesselDict dictionary
-    vesselDict.update({ "mmsi" : "fleet_name"})
+    vesselDict[mmsi] = fleet
 #Printing the length of the vesselDict dictionary 
 print(len(vesselDict))
 
 
-# %%
+# %% Task 4.4 
+vesselID = 440196000 
+
