@@ -49,6 +49,24 @@ for row in lineList[1:]:
 print(len(vesselDict))
 
 
-# %% Task 4.4 
+# %% Task 4.4 - Using dictionary to find value 
 vesselID = 440196000 
 
+#Initialize key list
+keys = []
+
+#Loop through items in date_dict
+for key, mmsi in vesselDict.items():
+    if mmsi == vesselID:
+        keys.append(key)
+
+# Report if no record were found 
+if len(keys) == 0: 
+    print(f"No records were found on {vesselID}")
+
+#Loop through keys and report locations
+for key in keys: 
+    location = location_dict[key]
+    lat = location[0]
+    lng = location[1]
+    print(f"On {user_date}, Sara the turtle was seen at {lat} Lat, {lng} Lng.")
