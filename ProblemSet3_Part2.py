@@ -30,15 +30,17 @@ fleet_idx = headerItems.index("fleet_name")
 
 #Print the values
 print(mmsi_idx,name_idx,fleet_idx)
+
 #%% Task 4.3
 
 #Create an empty dictionary
 vesselDict = {}
 
 #Iterate through all lines (except the header) in the data file:
-for row in lineList[1:]:
+for lineString in lineList[1:]:
 #Split the data into values
-    parts = row.split(",")
+    lineDatastring = str(lineString)
+    parts = lineDatastring(",")
 #Extract the mmsi value from the list using the mmsi_idx value
     mmsi = parts[mmsi_idx]
 #Extract the fleet value
@@ -47,7 +49,6 @@ for row in lineList[1:]:
     vesselDict[mmsi] = fleet
 #Printing the length of the vesselDict dictionary 
 print(len(vesselDict))
-
 
 # %% Task 4.4 - Using dictionary to find value 
 vesselID = 440196000 
@@ -83,17 +84,26 @@ lineListLoit = fileObjLoit.readlines()
 fileObjLoit.close() #Close the file
 
 # %% Question 5 - looping through the variables 
-for ships in fileObjLoit[1:]: 
+for ships in lineListLoit[1:]: 
 # Split the string into a list of data items 
     shipsstring = str(ships)
     lineData = shipsstring.split(",")
 # Store relevant values into their own variables 
-    transshipment_mmsi = lineData[0]
-    starting_latitude = lineData[1]
-    starting_longitude = lineData[2]
-    ending_latitude = lineData[3]
-    ending_longitude = lineData[4]
+    transshipment_mmsi = float(ships[0])
+    starting_latitude = float(ships[1])
+    starting_longitude = float(ships[2])
+    ending_latitude = float(ships[3])
+    ending_longitude = float(ships[4])
 # Examine latitude parameters
-    if starting_latitude < 0 and starting_longitude > 0:
-        continue
+    in_range_lat = starting_latitude < 0 and ending_latitude > 0
 # Examine longtitude parameters 
+    in_range_lon = 145 < starting_longitude < 155
+# Determining if the latitude and the longitude constraints are true 
+    if in_range_lat and in_range_lon:
+        # Look up flag using MMSI
+        fleet = vesselDict.get(transshipment_mmsi, "Unknown")
+        print("Vessel #", mmsi, "flies the flag of", fleet)
+# Bonus print value 
+    # else: 
+        # print("No vessels met criteria")
+# %%
