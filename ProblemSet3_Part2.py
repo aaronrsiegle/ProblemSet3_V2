@@ -1,5 +1,6 @@
 # Aaron Siegle 
 # 10/8/2025
+# For total commit history, see 'ProblemSet_V2" repo in GitHub. My GitHub username is aaronrsiegle
 
 #%% Task 4.1 
 
@@ -77,26 +78,33 @@ lineListLoit = fileObjLoit.readlines()
 fileObjLoit.close() #Close the file
 
 # %% Question 5 - looping through the variables 
+# Setting up the bonus points print value 
+hits = 0 
+
 for ships in lineListLoit[1:]: 
 # Split the string into a list of data items 
-    shipsstring = str(ships)
-    lineData = shipsstring.split(",")
+    lineData = ships.strip().split(",")
 # Store relevant values into their own variables 
-    transshipment_mmsi = float(ships[0])
-    starting_latitude = float(ships[1])
-    starting_longitude = float(ships[2])
-    ending_latitude = float(ships[3])
-    ending_longitude = float(ships[4])
-# Examine latitude parameters
-    in_range_lat = starting_latitude < 0 and ending_latitude > 0
+# Using float for decimal and integer for whole numbers because all the values we are working are numeric and the string version of the data was returning errors 
+    transshipment_mmsi = int(lineData[0])
+    starting_latitude = float(lineData[1])
+    starting_longitude = float(lineData[2])
+    ending_latitude = float(lineData[3])
+    ending_longitude = float(lineData[4])
+# Examine latitude parameters - does the boat cross the equator? 
+    in_range_lat = (starting_latitude < 0) and (ending_latitude > 0)
 # Examine longtitude parameters 
     in_range_lon = 145 < starting_longitude < 155
 # Determining if the latitude and the longitude constraints are true 
     if in_range_lat and in_range_lon:
-        # Look up flag using MMSI
-        fleet = vesselDict.get(transshipment_mmsi, "Unknown")
-        print("Vessel #", mmsi, "flies the flag of", fleet)
-# Bonus print value 
-    # else: 
-        # print("No vessels met criteria")
+        # Look up the fleet name from the vesselDict dictionary 
+        fleet = vesselDict.get(fleet, "Unknown")
+        print(f"Vessel #{transshipment_mmsi} flies the flag of {fleet}")
+        hits += 1 
+
+# If nothing is returned, then the error message below is returned 
+if hits == 0:
+    print("No vessels met criteria")
+
+
 # %%
