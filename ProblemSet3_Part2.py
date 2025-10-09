@@ -1,5 +1,5 @@
 # Aaron Siegle 
-# 10/7/2025
+# 10/8/2025
 
 #%% Task 4.1 
 
@@ -7,13 +7,13 @@
 fileObj = open(file='data/raw/transshipment_vessels_20180723.csv',mode='r')
 
 #Read the entire contents into a list object
-lineList = fileObj.readline()
+lineList = fileObj.readlines()
 
 #Release the link to the file objects (now that we have all its contents)
 fileObj.close() #Close the file
 
 #Save the contents of the first line in the list of lines to the variable "headerLineString"
-headerLineString = str(lineList)
+headerLineString = str(lineList[0])
 
 #Print the contents of the headerLine
 print(headerLineString)
@@ -39,8 +39,7 @@ vesselDict = {}
 #Iterate through all lines (except the header) in the data file:
 for lineString in lineList[1:]:
 #Split the data into values
-    lineDatastring = str(lineString)
-    parts = lineDatastring(",")
+    parts = lineString.split(",")
 #Extract the mmsi value from the list using the mmsi_idx value
     mmsi = parts[mmsi_idx]
 #Extract the fleet value
@@ -51,26 +50,20 @@ for lineString in lineList[1:]:
 print(len(vesselDict))
 
 # %% Task 4.4 - Using dictionary to find value 
+# Creating keys to make it easier to navigate the VesselDict dictionary 
+vessels = []
+vesselDict = {v["mmsi"]: v for v in vessels}
+
+# Assigning value to look for 
 vesselID = 440196000 
 
-#Initialize key list
-keys = []
+# Searching for a particular vessel
+if vesselID in vesselDict: 
+    flag = vesselDict[vesselID]["fleet_name"]
+    print(f"Vessel # {vesselID} flies the flag of {flag}")
+else: 
+    print(f"Vessel # {vesselID} not found in vesselDict")
 
-#Loop through items in date_dict
-for key, mmsi in vesselDict.items():
-    if mmsi == vesselID:
-        keys.append(key)
-
-# Report if no record were found 
-if len(keys) == 0: 
-    print(f"No records were found on {vesselID}")
-
-#Loop through keys and report locations
-# for key in keys: 
-    # location = location_dict[key]
-    # lat = location[0]
-    # lng = location[1]
-    # print(f"On {user_date}, Sara the turtle was seen at {lat} Lat, {lng} Lng.")
 
 # %% Question 5 - Loitering events - reading in the data 
 
